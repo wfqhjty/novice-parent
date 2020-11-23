@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.novice.dao.FrameUserMapper">
+    <resultMap id="BaseResultMap" type="cn.novice.entity.FrameUser">
+        <id column="userid" jdbcType="INTEGER" property="userid"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="passwd" jdbcType="VARCHAR" property="passwd"/>
+        <result column="createdate" jdbcType="TIMESTAMP" property="createdate"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="deptname" jdbcType="VARCHAR" property="deptname"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        userid, username, passwd, createdate, phone, deptname
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from frameuser
+        where userid = #{userid,jdbcType=INTEGER}
+    </select>
+    <select id="selectByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from frameuser
+        where username = #{username,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByNamePasswd" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from frameuser
+        where username = #{username,jdbcType=VARCHAR} and passwd = #{passwd,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from frameuser
+        where userid = #{userid,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="cn.novice.entity.FrameUser">
+        insert into frameuser (userid, username, passwd,
+                               createdate, phone, deptname
+        )
+        values (#{userid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR},
+                #{createdate,jdbcType=TIMESTAMP}, #{phone,jdbcType=VARCHAR}, #{deptname,jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="cn.novice.entity.FrameUser">
+        insert into frameuser
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userid != null">
+                userid,
+            </if>
+            <if test="username != null">
+                username,
+            </if>
+            <if test="passwd != null">
+                passwd,
+            </if>
+            <if test="createdate != null">
+                createdate,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="deptname != null">
+                deptname,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userid != null">
+                #{userid,jdbcType=INTEGER},
+            </if>
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="passwd != null">
+                #{passwd,jdbcType=VARCHAR},
+            </if>
+            <if test="createdate != null">
+                #{createdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="deptname != null">
+                #{deptname,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.novice.entity.FrameUser">
+        update frameuser
+        <set>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="passwd != null">
+                passwd = #{passwd,jdbcType=VARCHAR},
+            </if>
+            <if test="createdate != null">
+                createdate = #{createdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="deptname != null">
+                deptname = #{deptname,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where userid = #{userid,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.novice.entity.FrameUser">
+        update frameuser
+        set username   = #{username,jdbcType=VARCHAR},
+            passwd     = #{passwd,jdbcType=VARCHAR},
+            createdate = #{createdate,jdbcType=TIMESTAMP},
+            phone      = #{phone,jdbcType=VARCHAR},
+            deptname   = #{deptname,jdbcType=VARCHAR}
+        where userid = #{userid,jdbcType=INTEGER}
+    </update>
+</mapper>

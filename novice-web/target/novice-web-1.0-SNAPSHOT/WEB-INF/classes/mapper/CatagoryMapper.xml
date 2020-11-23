@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.novice.dao.catagory.CatagoryMapper">
+    <resultMap type="Catagory" id="CatagoryMap">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="value" property="value"/>
+    </resultMap>
+    <select id="getCatagoryList" resultMap="CatagoryMap">
+        select * from catagory
+    </select>
+    <select id="getValueByName" parameterType="String" resultType="String">
+        select value from catagory where name = #{name}
+    </select>
+
+</mapper>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.novice.dao.FrameDeptMapper">
+    <resultMap id="BaseResultMap" type="cn.novice.entity.FrameDept">
+        <id column="deptid" jdbcType="INTEGER" property="deptid"/>
+        <result column="deptname" jdbcType="VARCHAR" property="deptname"/>
+        <result column="deptshortname" jdbcType="VARCHAR" property="deptshortname"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        deptid, deptname, deptshortname
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from framedept
+        where deptid = #{deptid,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from framedept
+        where deptid = #{deptid,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="cn.novice.entity.FrameDept">
+        insert into framedept (deptid, deptname, deptshortname
+        )
+        values (#{deptid,jdbcType=INTEGER}, #{deptname,jdbcType=VARCHAR}, #{deptshortname,jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="cn.novice.entity.FrameDept">
+        insert into framedept
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="deptid != null">
+                deptid,
+            </if>
+            <if test="deptname != null">
+                deptname,
+            </if>
+            <if test="deptshortname != null">
+                deptshortname,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="deptid != null">
+                #{deptid,jdbcType=INTEGER},
+            </if>
+            <if test="deptname != null">
+                #{deptname,jdbcType=VARCHAR},
+            </if>
+            <if test="deptshortname != null">
+                #{deptshortname,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.novice.entity.FrameDept">
+        update framedept
+        <set>
+            <if test="deptname != null">
+                deptname = #{deptname,jdbcType=VARCHAR},
+            </if>
+            <if test="deptshortname != null">
+                deptshortname = #{deptshortname,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where deptid = #{deptid,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.novice.entity.FrameDept">
+        update framedept
+        set deptname      = #{deptname,jdbcType=VARCHAR},
+            deptshortname = #{deptshortname,jdbcType=VARCHAR}
+        where deptid = #{deptid,jdbcType=INTEGER}
+    </update>
+</mapper>

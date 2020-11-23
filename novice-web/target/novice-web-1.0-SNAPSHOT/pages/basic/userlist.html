@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/basicroot.js"></script>
+    <script type="text/javascript" src="js/userlist.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/userlist.css">
+</head>
+<body>
+<div id="container">
+    <div>
+        <button type="button" onclick="renderWindow()">获取用户</button>
+    </div>
+    <div id="userlist"></div>
+</div>
+<script>
+    var url = getRootPath();
+
+    function renderWindow() {
+        $.ajax({
+            url: url + "/userAction/getUserList",
+            type: 'POST',
+            dataType: 'json',
+            contentType: 'application/json;charset=utf-8',
+            data: {},
+            timeout: 10000,
+            success: function (data) {
+                console.log(data);
+                document.getElementById("userlist").innerHTML = setUserList(data);
+
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("获取信息失败");
+            }
+        });
+    }
+
+
+</script>
+
+</body>
+</html>

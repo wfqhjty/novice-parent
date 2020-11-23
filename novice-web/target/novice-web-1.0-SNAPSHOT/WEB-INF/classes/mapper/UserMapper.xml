@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.novice.dao.user.UserMapper">
+    <resultMap type="User" id="UserMap">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="passwd" property="passwd"/>
+        <result column="createdate" property="createdate"/>
+        <result column="phone" property="phone"/>
+        <result column="loginid" property="loginid"/>
+    </resultMap>
+    <select id="getUserList" resultMap="UserMap">
+        select *
+        from user
+    </select>
+    <select id="getUserById" parameterType="int" resultMap="UserMap">
+        select *
+        from user
+        where id = #{id}
+    </select>
+    <select id="getUserByNamePasswd" resultMap="UserMap">
+        select *
+        from user
+        where username = #{username,jdbcType=VARCHAR} and passwd = #{passwd,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteUser" parameterType="int">
+        delete from user
+        where id = #{id}
+    </delete>
+    <insert id="addUser" parameterType="User">
+        insert into user (username, passwd, createdate, phone, loginid) values (
+        #{username}, #{passwd}, #{createdate}, #{phone}, #{loginid}
+        )
+    </insert>
+    <update id="updateUser" parameterType="User">
+        update user
+        set username = #{username}, passwd = #{passwd}, createdate = #{createdate}, phone = #{phone},
+        loginid = #{loginid}
+        where id = #{id}
+    </update>
+
+</mapper>

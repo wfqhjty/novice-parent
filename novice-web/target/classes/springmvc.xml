@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd 
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context-4.3.xsd 
+	http://www.springframework.org/schema/mvc 
+	http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <!-- 配置自动扫描的包 -->
+    <context:component-scan base-package="cn.novice.controller"/>
+    <!-- 处理静态资源文件，303校验等等（标配，必须写） 将SpringMVC不能处理的请求交给Tomcat-->
+    <mvc:default-servlet-handler/>
+    <!-- springMVC高级功能，映射请求 -->
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>application/json;charset=UTF-8</value>
+                        <value>text/html;charset=UTF-8</value>
+                    </list>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+    <!-- 配置拦截器 -->
+    <!--<mvc:interceptors>-->
+    <!--<mvc:interceptor>-->
+    <!--&lt;!&ndash; 拦截所有的请求，这个必须写在前面，也就是写在【不拦截】的上面 &ndash;&gt;-->
+    <!--<mvc:mapping path="/**"/>-->
+    <!--&lt;!&ndash; 但是排除下面这些，也就是不拦截请求 &ndash;&gt;-->
+    <!--&lt;!&ndash;<mvc:exclude-mapping path="/index.html" />&ndash;&gt;-->
+    <!--<mvc:exclude-mapping path="/pages/login/login.html"/>-->
+    <!--<mvc:exclude-mapping path="/pages/login/register.html"/>-->
+    <!--<mvc:exclude-mapping path="/loginController/userLogin"/>-->
+    <!--<mvc:exclude-mapping path="/loginController/userRegister"/>-->
+    <!--<bean class="cn.novice.utils.jwt.JWTInterceptor"/>-->
+    <!--</mvc:interceptor>-->
+    <!--</mvc:interceptors>-->
+    <!-- 定义跳转的文件的前后缀 ，视图模式配置 -->
+    <bean
+            class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/"/>
+        <property name="suffix" value=".html"/>
+    </bean>
+    <!-- 启动AOP AspectJ注解自动代理 -->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+    <!-- 指定自定义注解类的路径 及 配置在Controller上添加自定义注解来接收数据 -->
+    <context:component-scan base-package="cn.novice.utils.aop">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+</beans>
